@@ -18,7 +18,6 @@
    :submit-form {:status nil :problem nil :message nil :body nil}
    :form-data   (util/model->form-data (->person))))
 
-
 (def person-db
   {:person/create (person-form-db)
    :person/update (person-form-db)})
