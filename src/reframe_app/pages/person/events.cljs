@@ -9,22 +9,12 @@
 (re-frame/reg-event-db
  ::set-create-form-field
  (fn-traced [db [_ field value]]
-   (assoc-in db [:person/create :form-data field] value)))
+   (assoc-in db [:person :create :form-data field] value)))
 
 (re-frame/reg-event-db
  ::set-update-form-field
  (fn-traced [db [_ field value]]
-   (assoc-in db [:person/update :form-data field] value)))
-
-#_{:fetch {:method                 :post
-        :url                    "https://api.github.com/orgs/day8"
-        :body                   api-data
-        :mode                   :cors
-        :timeout                5000
-        :request-content-type   :json
-        :response-content-types {#"application/.*json" :json}
-        :on-success             [::submit-form-success]
-        :on-failure             [::submit-form-failure]}}
+   (assoc-in db [:person :update :form-data field] value)))
 
 (re-frame/reg-event-fx
  ::submit-form
@@ -41,7 +31,7 @@
  (fn-traced [db type response]
    (util/fetch-sucess db response [:person type :submit-form])))
 
-(re-frame/reg-event-db
+#_(re-frame/reg-event-db
  ::submit-form-failure
  (fn-traced [db type response]
    (util/fetch-failure db response [:person type :submit-form])))

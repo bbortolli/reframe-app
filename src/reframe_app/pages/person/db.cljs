@@ -19,5 +19,5 @@
    :form-data   (util/model->form-data (->person))))
 
 (def person-db
-  {:person/create (person-form-db)
-   :person/update (person-form-db)})
+  {:create (person-form-db)
+   :update (person-form-db)})

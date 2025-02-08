@@ -23,9 +23,9 @@
 (defn person-create []
   (person-form {:ev   ::events/set-create-form-field
                 :subs ::subs/create-form-data
-                :form-path :person/create}))
+                :form-path :create}))
 
 (defn person-update []
   (person-form {:ev   ::events/set-update-form-field
                 :subs ::subs/update-form-data
-                :form-path :person/update}))
+                :form-path :update}))
