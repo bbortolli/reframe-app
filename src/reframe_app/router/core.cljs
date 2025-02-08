@@ -9,11 +9,10 @@
 
 (def routes
   (atom
-   ["/" {""      :home
-         "auth"  :auth
-         "about" :about
-         "users" {"" :users-index
-                  ["/" :id] :user-view}}]))
+   ["/" {""       :home
+         "secret" :secret
+         "auth"   :auth
+         "person" :about}]))
 
 (defn parse [url]
   (bidi/match-route @routes url))
@@ -25,20 +24,19 @@
 
 (defn dispatch [route]
   (let [panel (keyword (str (name (:handler route)) "-panel"))]
+    (rf/dispatch [::events/set-active-panel panel])
     (rf/dispatch [::events/set-route {:route route :panel panel}])))
 
 (defonce history
   (pushy/pushy dispatch parse))
 
-(defn navigate!
-  [handler]
+(defn navigate! [handler]
   (pushy/set-token! history (apply url-for handler)))
 
-(defn start!
-  []
+(defn start! []
   (pushy/start! history))
 
 (rf/reg-fx
- ::navigate
+ :router-navigate
  (fn [handler]
    (navigate! handler)))

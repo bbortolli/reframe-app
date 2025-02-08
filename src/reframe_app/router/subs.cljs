@@ -5,9 +5,9 @@
 (re-frame/reg-sub
  ::active-panel
  (fn [db _]
-   (:route/panel db)))
+   (-> db :router :active-panel)))
 
 (re-frame/reg-sub
  ::route-params
  (fn [db _]
-   (get-in db [:route/route :params])))
+   (-> db :router :route :params)))

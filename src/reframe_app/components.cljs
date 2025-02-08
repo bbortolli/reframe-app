@@ -1,7 +1,8 @@
 (ns reframe-app.components
   (:require [reframe-app.util :refer [<sub >evt]]
             [clojure.string :as st]
-            [re-frame.core :as rf]))
+            [re-frame.core :as rf]
+            [reframe-app.router.events :as router-events]))
 
 (defn- ->value [e] (-> e .-target .-value))
 
@@ -37,11 +38,15 @@
 (defn input-date [params]
   (fn [] (base-input (assoc params :type "date"))))
 
-(defn submit-wrapper [rf-event ev]
+(defn prev-wrapper [rf-event ev]
   (.preventDefault ev)
   (rf/dispatch rf-event))
 
 (defn submit [{:keys [text event]
                :or   {text "Submit"}}]
   (fn []
-    [:button {:on-click (partial submit-wrapper event)} text]))
+    [:button {:on-click (partial prev-wrapper event)} text]))
+
+(defn nav-to [{:keys [text to]}]
+  (fn []
+    [:button {:on-click (partial prev-wrapper [::router-events/navigate to])} text]))

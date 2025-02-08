@@ -1,19 +1,20 @@
 (ns reframe-app.views
   (:require
-   [reframe-app.subs :as subs]
+   [reframe-app.components :refer [nav-to]]
    [reframe-app.router.subs :as router-subs]
    [reframe-app.util :refer [<sub]]
-   [reframe-app.router.core :as router]
-   [reframe-app.router.views :as router-view]))
+   [reframe-app.router.core :as router]))
 
-(defn x-panel []
-  (let [user (<sub [::subs/user])]
-    (if (:name user)
-      (router-view/router-view user)
-      []
-      #_(login-panel))))
+(defmethod router/panels :home-panel []
+  [:div
+   [:h1 "Welcome! You are at home panel :)"]
+   [nav-to {:text "Go to secret!" :to [:secret]}]])
+
+(defmethod router/panels :secret-panel []
+  [:div
+   [:h1 "OOOOOOOOOMMMMMMMMMMGGGGG"]])
 
 (defn main-panel []
   (let [active-panel (<sub [::router-subs/active-panel])]
-    [:div "this is on every page"
+    [:div (str "this is on every page, panel => " active-panel)
      [:div (router/panels active-panel)]]))
