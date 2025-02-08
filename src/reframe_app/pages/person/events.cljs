@@ -3,16 +3,17 @@
    [re-frame.core :as re-frame]
    [superstructor.re-frame.fetch-fx]
    [reframe-app.util :as util]
-   [reframe-app.pages.person.db :as db]))
+   [reframe-app.pages.person.db :as db]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]))
 
 (re-frame/reg-event-db
  ::set-create-form-field
- (fn [db [_ field value]]
+ (fn-traced [db [_ field value]]
    (assoc-in db [:person/create :form-data field] value)))
 
 (re-frame/reg-event-db
  ::set-update-form-field
- (fn [db [_ field value]]
+ (fn-traced [db [_ field value]]
    (assoc-in db [:person/update :form-data field] value)))
 
 #_{:fetch {:method                 :post
@@ -27,7 +28,7 @@
 
 (re-frame/reg-event-fx
  ::submit-form
- (fn [{:keys [db]} [_ {:keys [form-path]}]]
+ (fn-traced [{:keys [db]} [_ {:keys [form-path]}]]
    (let [form-data     (-> db form-path :form-data)
          api-data      (util/parse-form form-data (db/->person))
          fake-response {:status 200 :body []}]
@@ -37,10 +38,10 @@
 
 (re-frame/reg-event-db
  ::submit-form-success
- (fn [db type response]
+ (fn-traced [db type response]
    (util/fetch-sucess db response [:person type :submit-form])))
 
 (re-frame/reg-event-db
  ::submit-form-failure
- (fn [db type response]
+ (fn-traced [db type response]
    (util/fetch-failure db response [:person type :submit-form])))
