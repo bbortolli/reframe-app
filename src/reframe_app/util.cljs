@@ -1,9 +1,8 @@
 (ns reframe-app.util
-  (:require
-   [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as rf]))
 
-(def <sub (comp deref re-frame/subscribe))
-(def >evt re-frame/dispatch)
+(def <sub (comp deref rf/subscribe))
+(def >evt rf/dispatch)
 
 (defn empty-value? [v]
   (or (nil? v)
