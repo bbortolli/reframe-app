@@ -21,5 +21,6 @@
 (defn init []
   (router/start!)
   (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::events/load-local-storage])
   (dev-setup)
   (mount-root))
