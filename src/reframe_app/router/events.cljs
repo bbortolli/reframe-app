@@ -10,10 +10,12 @@
 
 (rf/reg-event-db
  ::set-active-panel
- (fn-traced [db [_ panel]]
-   (assoc-in db [:router :active-panel] panel)))
+ (rf/path [:router :active-panel])
+ (fn-traced [_ [_ panel]]
+   panel))
 
 (rf/reg-event-db
  ::set-route
- (fn-traced [db [_ route]]
-   (assoc-in db [:router :route] route)))
+ (rf/path [:router :route])
+ (fn-traced [_ [_ route]]
+   route))
