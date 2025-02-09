@@ -1,8 +1,10 @@
 (ns reframe-app.components
   (:require [reframe-app.util :refer [<sub >evt]]
             [clojure.string :as st]
+            [reagent.core :as r]
             [re-frame.core :as rf]
-            [reframe-app.router.events :as router-events]))
+            [reframe-app.router.events :as router-events]
+            ["react-router-dom" :as rr]))
 
 (defn- ->value [e] (-> e .-target .-value))
 
@@ -50,3 +52,8 @@
 (defn nav-to [{:keys [text to]}]
   (fn []
     [:button {:on-click (partial prev-wrapper [::router-events/navigate to])} text]))
+
+(def router (r/adapt-react-class rr/BrowserRouter))
+(def routes (r/adapt-react-class rr/Routes))
+(def route (r/adapt-react-class rr/Route))
+(def link (r/adapt-react-class rr/Link))

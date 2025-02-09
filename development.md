@@ -45,4 +45,12 @@ For more details, check the official TailwindCSS documentation:
 - [Tailwind CLI Installation](https://tailwindcss.com/docs/installation/tailwind-cli)  
 
 
-# Re-frame db structure
+# Modules
+
+## Router
+For page routing we use the react library `react-router-dom`
+
+### Requirements  
+- [react-router-dom](https://www.npmjs.com/package/react-router-dom) 
+
+## Auth
