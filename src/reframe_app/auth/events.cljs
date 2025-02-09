@@ -8,3 +8,9 @@
  ::set-form-field
  (fn-traced [db [_ field value]]
    (assoc-in db [:auth :form-data field] value)))
+
+(re-frame/reg-event-fx
+ ::set-auth-user
+ (fn-traced [{:keys [db]} [_ user]]
+   {:db (assoc-in db [:auth :user] user)
+    :storage/set-item [:user user]}))

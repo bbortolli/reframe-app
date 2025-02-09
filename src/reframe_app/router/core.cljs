@@ -1,8 +1,9 @@
 (ns reframe-app.router.core
-  (:require [bidi.bidi :as bidi]
-            [pushy.core :as pushy]
-            [re-frame.core :as rf]
-            [reframe-app.router.events :as events]))
+  (:require
+   [bidi.bidi :as bidi]
+   [pushy.core :as pushy]
+   [re-frame.core :as rf]
+   [reframe-app.router.events :as events]))
 
 (defmulti panels identity)
 (defmethod panels :default [] [:h1 "Page not found."])
