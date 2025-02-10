@@ -4,8 +4,7 @@
    [re-frame.core :as re-frame]
    [reframe-app.events :as events]
    [reframe-app.views :as views]
-   [reframe-app.config :as config]
-   [reframe-app.router.core :as router]))
+   [reframe-app.config :as config]))
 
 
 (defn dev-setup []
@@ -19,7 +18,6 @@
     (rdom/render [views/main-panel] root-el)))
 
 (defn init []
-  (router/start!)
   (re-frame/dispatch-sync [::events/initialize-db])
   (re-frame/dispatch-sync [::events/load-local-storage])
   (dev-setup)

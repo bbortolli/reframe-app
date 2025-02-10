@@ -3,14 +3,15 @@
             [clojure.string :as st]
             [reagent.core :as r]
             [re-frame.core :as rf]
-            [reframe-app.router.events :as router-events]
             ["react-router-dom" :as rr]))
 
+;; Helpers
 (defn- ->value [e] (-> e .-target .-value))
 
 (defn- on-change-wrapper [event element]
   (>evt (conj event (->value element))))
 
+;; HTML elements
 (defn- base-input [{:keys [subs event label type class]}]
   (let [current-value (<sub subs)]
     [:div
@@ -49,11 +50,17 @@
   (fn []
     [:button {:on-click (partial prev-wrapper event)} text]))
 
-(defn nav-to [{:keys [text to]}]
-  (fn []
-    [:button {:on-click (partial prev-wrapper [::router-events/navigate to])} text]))
-
+;; React Router
 (def router (r/adapt-react-class rr/BrowserRouter))
 (def routes (r/adapt-react-class rr/Routes))
 (def route (r/adapt-react-class rr/Route))
 (def link (r/adapt-react-class rr/Link))
+
+(defn auth-wrap []
+  (r/create-class
+   {:reagent-render
+    (fn [component]
+      (let [authenticated? true]
+        (if authenticated?
+          component
+          [:> rr/Navigate {:to "/auth"}])))}))
